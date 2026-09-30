@@ -17,7 +17,7 @@ test.describe("seo, security and accessibility", () => {
     await page.goto("/admin/menu");
     await expect(page).toHaveURL(/\/admin\/login\?next=%2Fadmin%2Fmenu/);
     const res = await request.get("/uploads/../../etc/passwd");
-    expect([404, 400]).toContain(res.status());
+    expect([400, 403, 404]).toContain(res.status()); // the platform edge may reject traversal before the app does
     const headers = (await request.get("/")).headers();
     expect(headers["content-security-policy"]).toContain("default-src 'self'");
     expect(headers["x-frame-options"]).toBe("SAMEORIGIN");
