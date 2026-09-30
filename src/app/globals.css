@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette from restaurantina-data.md §5 (logo brown, cream, terracotta, Talavera green & blue, mustard) plus tints/shades. */
+  --color-cream-50: #fcfaf5;
+  --color-cream-100: #f5efe6;
+  --color-cream-200: #ede3d2;
+  --color-cream-300: #e0d2b9;
+  --color-cream-400: #c9b48f;
+
+  --color-brown-950: #1e140d;
+  --color-brown-900: #3d2b1f;
+  --color-brown-800: #4c3627;
+  --color-brown-700: #5e4433;
+  --color-brown-600: #765641;
+  --color-brown-500: #93715a;
+  --color-brown-400: #b39680;
+
+  --color-clay-200: #f3cdbb;
+  --color-clay-300: #e8a588;
+  --color-clay-400: #d3744e;
+  --color-clay-500: #b5451b;
+  --color-clay-600: #963a17;
+  --color-clay-700: #772e12;
+
+  --color-verde-200: #c2ded1;
+  --color-verde-300: #8dbfa9;
+  --color-verde-400: #5c9a7f;
+  --color-verde-500: #2e5e4e;
+  --color-verde-600: #264e41;
+  --color-verde-700: #1d3d33;
+
+  --color-azul-200: #c6cff0;
+  --color-azul-300: #8ea0e6;
+  --color-azul-400: #5a70cc;
+  --color-azul-500: #1f3a93;
+  --color-azul-600: #1a3079;
+  --color-azul-700: #14255e;
+
+  --color-mostaza-200: #f6e4a8;
+  --color-mostaza-300: #eed27a;
+  --color-mostaza-400: #e3b93f;
+  --color-mostaza-500: #d9a21b;
+  --color-mostaza-600: #b5861a;
+  --color-mostaza-700: #8c6712;
+
+  --font-display: var(--font-fraunces), "Iowan Old Style", Georgia, serif;
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(61 43 31 / 0.06), 0 14px 36px -16px rgb(61 43 31 / 0.35);
+  --shadow-lift: 0 2px 4px rgb(61 43 31 / 0.08), 0 30px 60px -20px rgb(61 43 31 / 0.45);
+  --shadow-glow: 0 0 0 1px rgb(181 69 27 / 0.25), 0 14px 40px -10px rgb(181 69 27 / 0.55);
+  --shadow-plate: 0 30px 60px -24px rgb(30 20 13 / 0.55), 0 8px 20px -10px rgb(30 20 13 / 0.35);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-steam-a: steam-a 34s ease-in-out infinite alternate;
+  --animate-steam-b: steam-b 46s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-sway: sway 9s ease-in-out infinite alternate;
+  --animate-sway-slow: sway 14s ease-in-out infinite alternate-reverse;
+  --animate-spin-slow: spin 120s linear infinite;
+  --animate-light: light 18s ease-in-out infinite alternate;
+
+  @keyframes steam-a {
+    0% { transform: translate3d(-4%, 6%, 0) scale(1); opacity: 0.55; }
+    100% { transform: translate3d(6%, -10%, 0) scale(1.2); opacity: 0.85; }
+  }
+  @keyframes steam-b {
+    0% { transform: translate3d(8%, 0, 0) scale(1.1); opacity: 0.5; }
+    100% { transform: translate3d(-6%, -12%, 0) scale(0.95); opacity: 0.8; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  @keyframes sway {
+    0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+    100% { transform: translate3d(6px, -10px, 0) rotate(4deg); }
+  }
+  @keyframes light {
+    0% { transform: translate3d(-10%, -6%, 0); opacity: 0.35; }
+    100% { transform: translate3d(12%, 8%, 0); opacity: 0.6; }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+  body {
+    @apply bg-cream-100 text-brown-900 font-sans antialiased;
+  }
+  ::selection {
+    background: var(--color-clay-500);
+    color: var(--color-cream-50);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-clay-500);
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+  h1, h2, h3 {
+    @apply font-display font-medium;
+    text-wrap: balance;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+  p { text-wrap: pretty; }
+  img { @apply select-none; }
+  button, [role="button"] { cursor: pointer; }
+}
+
+@utility eyebrow {
+  @apply font-sans text-[11.5px] font-bold uppercase tracking-[0.22em] leading-none;
+}
+@utility container-site {
+  @apply mx-auto w-full max-w-[1360px] px-5 sm:px-8 lg:px-12;
+}
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+@utility mask-fade-x {
+  mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+@utility mask-fade-b {
+  mask-image: linear-gradient(to bottom, black 70%, transparent);
+}
+@utility arch {
+  border-radius: 999px 999px 28px 28px;
+}
+@utility arch-sm {
+  border-radius: 999px 999px 18px 18px;
+}
+@utility skeleton {
+  background: linear-gradient(90deg, rgb(61 43 31 / 0.06) 25%, rgb(61 43 31 / 0.12) 37%, rgb(61 43 31 / 0.06) 63%);
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+@utility skeleton-dark {
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.06) 25%, rgb(255 255 255 / 0.12) 37%, rgb(255 255 255 / 0.06) 63%);
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+@utility text-shadow-soft {
+  text-shadow: 0 2px 24px rgb(30 20 13 / 0.45), 0 1px 2px rgb(30 20 13 / 0.5);
+}
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.08;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 220px 220px;
+  }
+}
+/* Faint Talavera tile field: an 8-petal motif in Talavera blue with a mustard centre, tiled. */
+@utility bg-talavera {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%231f3a93' stroke-width='1.2'%3E%3Ccircle cx='48' cy='48' r='6'/%3E%3Cpath d='M48 20c6 8 6 16 0 24-6-8-6-16 0-24zM48 52c6 8 6 16 0 24-6-8-6-16 0-24zM20 48c8-6 16-6 24 0-8 6-16 6-24 0zM52 48c8-6 16-6 24 0-8 6-16 6-24 0z'/%3E%3Cpath d='M28 28c9 2 15 8 17 17-9-2-15-8-17-17zM68 28c-2 9-8 15-17 17 2-9 8-15 17-17zM28 68c2-9 8-15 17-17-2 9-8 15-17 17zM68 68c-9-2-15-8-17-17 9 2 15 8 17 17z' stroke='%232e5e4e'/%3E%3C/g%3E%3Ccircle cx='48' cy='48' r='2.2' fill='%23d9a21b'/%3E%3Ccircle cx='0' cy='0' r='2' fill='%23b5451b'/%3E%3Ccircle cx='96' cy='0' r='2' fill='%23b5451b'/%3E%3Ccircle cx='0' cy='96' r='2' fill='%23b5451b'/%3E%3Ccircle cx='96' cy='96' r='2' fill='%23b5451b'/%3E%3C/svg%3E");
+  background-size: 96px 96px;
+}
+@utility bg-talavera-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23fcfaf5' stroke-width='1.2'%3E%3Ccircle cx='48' cy='48' r='6'/%3E%3Cpath d='M48 20c6 8 6 16 0 24-6-8-6-16 0-24zM48 52c6 8 6 16 0 24-6-8-6-16 0-24zM20 48c8-6 16-6 24 0-8 6-16 6-24 0zM52 48c8-6 16-6 24 0-8 6-16 6-24 0z'/%3E%3Cpath d='M28 28c9 2 15 8 17 17-9-2-15-8-17-17zM68 28c-2 9-8 15-17 17 2-9 8-15 17-17zM28 68c2-9 8-15 17-17-2 9-8 15-17 17zM68 68c-9-2-15-8-17-17 9 2 15 8 17 17z'/%3E%3C/g%3E%3Ccircle cx='48' cy='48' r='2.2' fill='%23d9a21b'/%3E%3C/svg%3E");
+  background-size: 96px 96px;
+}
+
+/* Steam wisps: pure CSS, GPU transforms only, reduced on small screens / reduced motion */
+.steam-layer {
+  position: absolute;
+  pointer-events: none;
+  will-change: transform, opacity;
+  filter: blur(26px);
+  border-radius: 9999px;
+  background: radial-gradient(closest-side, rgb(252 250 245 / 0.9), rgb(252 250 245 / 0));
+}
+.steam-a { animation: var(--animate-steam-a); }
+.steam-b { animation: var(--animate-steam-b); }
+@media (prefers-reduced-motion: reduce) {
+  .steam-layer { animation: none; opacity: 0.4; }
+}
+
+.light-sweep {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  background: radial-gradient(40% 40% at 30% 30%, rgb(255 255 255 / 0.55), transparent 70%);
+  animation: var(--animate-light);
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .light-sweep { animation: none; }
+}
+
+/* Admin base */
+.admin-body {
+  @apply bg-[#f5f4f1] text-[#1b1b1a];
+  color-scheme: light;
+  font-feature-settings: "tnum", "cv11";
+}

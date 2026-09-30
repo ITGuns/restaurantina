@@ -1,0 +1,10 @@
+import { chromium } from "@playwright/test";
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1360, height: 900 } });
+page.on("pageerror", (e) => console.log("PAGEERROR:", e.message, "\n", e.stack?.split("\n").slice(0, 8).join("\n")));
+page.on("console", (m) => { if (m.type() === "error") console.log("CONSOLE ERROR:", m.text().slice(0, 300), m.location()?.url, m.location()?.lineNumber); });
+await page.goto("http://localhost:3200/?r=3", { waitUntil: "networkidle" });
+await page.waitForTimeout(3000);
+const op = await page.evaluate(() => { const t = document.querySelector("main")?.firstElementChild; return t && getComputedStyle(t).opacity; });
+console.log("template opacity:", op);
+await browser.close();

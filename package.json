@@ -1,0 +1,50 @@
+{
+  "name": "restaurantina",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3200",
+    "build": "next build",
+    "start": "next start -p 3200",
+    "typecheck": "tsc --noEmit",
+    "db:local": "node scripts/local-db.mjs",
+    "db:push": "drizzle-kit push",
+    "db:generate": "drizzle-kit generate",
+    "db:seed": "tsx src/db/seed.ts",
+    "db:reseed": "tsx src/db/seed.ts --force",
+    "db:reset": "tsx src/db/seed.ts --force --reservations",
+    "assets:fetch": "node scripts/fetch-assets.mjs",
+    "setup": "npm run assets:fetch && npm run db:push && npm run db:seed",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:all": "vitest run && playwright test"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.3",
+    "jose": "^6.2.12",
+    "motion": "^12.43.0",
+    "next": "15.5.25",
+    "pg": "^8.23.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.13.0",
+    "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "dotenv": "^18.0.2",
+    "drizzle-kit": "^0.31.11",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.20.0",
+    "typescript": "5.9.3",
+    "vitest": "^5.0.1"
+  }
+}
