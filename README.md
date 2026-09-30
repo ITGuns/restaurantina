@@ -31,7 +31,15 @@ npm run dev                       # http://localhost:3200  ·  admin at /admin
 
 ## Deployment
 
-Any Node host that runs Next.js works; `vercel.json` is included. Required env vars: `DATABASE_URL` (on Supabase use the **transaction pooler**, port 6543), `SESSION_SECRET`, and optionally `NEXT_PUBLIC_SITE_URL`. `DIRECT_URL` (session pooler, port 5432) is only needed for `drizzle-kit push` and the seed. SSL is enabled automatically for non-localhost hosts.
+Production runs on **Vercel** (project `restaurantina`, GitHub repo `ITGuns/restaurantina`, pushes to `main` deploy automatically) with the database on **Supabase** (project `ejhracibubqjkfobxmur`, region `ap-southeast-2`). Required env vars on Vercel: `DATABASE_URL` (the Supabase **transaction pooler**, `aws-0-ap-southeast-2.pooler.supabase.com:6543`, user `postgres.<project-ref>`), `SESSION_SECRET`, and optionally `NEXT_PUBLIC_SITE_URL` (falls back to `VERCEL_PROJECT_PRODUCTION_URL`). `DIRECT_URL` (session pooler, port 5432) is only needed locally for `drizzle-kit push` and the seed; the direct `db.*.supabase.co` host is IPv6-only, which Vercel and most home networks cannot reach, so always use the pooler. SSL is enabled automatically for non-localhost hosts. The local `.env.production.local` (git-ignored) holds the production URLs and the initial admin login.
+
+To apply a schema change or re-seed production from your machine:
+
+```bash
+set -a; source .env.production.local; set +a
+npm run db:push            # uses DIRECT_URL
+npm run db:seed            # first-time seed; db:reseed re-imports content without touching reservations
+```
 
 ## What's inside
 
